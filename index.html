@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tenang Bu: Pendamping Harian Ibu dan Balita</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<!-- Supabase JS Client UMD -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{--bg:#FFF5F0;--sf:#fff;--tx:#3A2E39;--mt:#7A6270;--pr:#C93F63;--pt:#fff;--ac:#FFD97A;--ln:#F7DDD8;--wn:#B8431F;color-scheme:light;box-sizing:border-box}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 16px/1.55 Nunito,sans-serif}
+.w{max-width:640px;margin:0 auto;padding:18px 16px 96px}
+h1{font-size:30px;font-weight:800;margin:6px 0}
+h2{font-size:19px;font-weight:800;margin:0 0 8px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:16px;margin:12px 0}
+.btn{background:var(--pr);color:var(--pt);border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer;width:100%}
+.ban{background:var(--ac);color:#2B2433;border-radius:12px;padding:10px 14px;font-weight:800;margin:8px 0}
+.auth-overlay{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
+.auth-card{background:var(--sf);border:1px solid var(--ln);border-radius:20px;padding:24px 20px;width:100%;max-width:380px;box-shadow:0 8px 24px rgba(58,46,57,0.05)}
+.auth-badge{display:inline-block;background:var(--ac);color:#2B2433;font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;margin-bottom:8px}
+.input-field{width:100%;padding:12px 14px;margin:6px 0 14px;border:1.5px solid var(--ln);border-radius:12px;background:var(--bg);color:var(--tx);font:inherit;box-sizing:border-box}
+.auth-err{display:none;background:#FDF2F0;border:1px solid var(--ln);color:var(--wn);padding:10px 12px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:12px}
+</style>
+</head>
+<body>
+
+<div id="auth-overlay" class="auth-overlay">
+  <div class="auth-card">
+    <div style="text-align:center; margin-bottom:16px;">
+      <span class="auth-badge">Akses Khusus Pembeli</span>
+      <h1>Tenang, Bu.</h1>
+      <p style="color:#7A6270; font-size:14px; margin:0;">Masukkan Email & No HP yang kamu gunakan saat order di Lynk.id untuk masuk.</p>
+    </div>
+
+    <div id="auth-error" class="auth-err"></div>
+
+    <form onsubmit="handleLogin(event)">
+      <label style="font-size:14px; font-weight:800;">Email Pembelian</label>
+      <input type="email" id="auth-email" class="input-field" placeholder="ibu@gmail.com" required>
+
+      <label style="font-size:14px; font-weight:800;">No. HP</label>
+      <input type="text" id="auth-pass" class="input-field" placeholder="628123456789" required>
+
+      <button type="submit" id="auth-btn" class="btn" style="margin-top:6px;">Masuk ke Aplikasi</button>
+    </form>
+  </div>
+</div>
+
+<div class="w" id="app" style="display:none;">
+  <div class="card" style="text-align:center; padding:24px;">
+    <h2>🌸 Selamat Datang di Tenang Bu!</h2>
+    <p style="color:#7A6270;">Akunmu berhasil terverifikasi.</p>
+    <div id="user-info" class="ban" style="margin:16px 0;"></div>
+    <button class="btn" onclick="handleLogout()" style="background:#C93F63; margin-top:10px;">Keluar (Logout)</button>
+  </div>
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://ltlpdqetmypmnhliqtaqk.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0bHBkcWV0bXlwbW5obHF0YXFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI3NjQ2NjMsImV4cCI6MjEwODM0MDY2M30.fghnYRwyOIPUUqEUPhuJ9Iu4kZnPov_8Lgu65jSOvkw';
+
+  // Inisialisasi Supabase dengan aman
+  let supabaseClient = null;
+  try {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  } catch (e) {
+    console.error("Gagal inisialisasi Supabase:", e);
+  }
+
+  async function handleLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('auth-email').value.trim();
+    const phone = document.getElementById('auth-pass').value.trim();
+    const errBox = document.getElementById('auth-error');
+    const btn = document.getElementById('auth-btn');
+
+    errBox.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Memeriksa Database...';
+
+    if (!supabaseClient) {
+      errBox.textContent = 'Koneksi Supabase gagal dimuat.';
+      errBox.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Masuk ke Aplikasi';
+      return;
+    }
+
+    try {
+      const { data, error } = await supabaseClient
+        .from('buyers')
+        .select('*')
+        .eq('email', email)
+        .eq('phone', phone);
+
+      if (error) throw error;
+
+      if (data && data.length > 0) {
+        localStorage.setItem('tenang_user', JSON.stringify(data[0]));
+        showApp(data[0]);
+      } else {
+        errBox.textContent = 'Email atau No. HP tidak ditemukan di tabel buyers. Pastikan data sama persis dengan saat order.';
+        errBox.style.display = 'block';
+      }
+    } catch (err) {
+      console.error(err);
+      errBox.textContent = 'Gagal terhubung (Failed to fetch). Periksa koneksi internet atau ekstensi pemblokir iklan (AdBlocker).';
+      errBox.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Masuk ke Aplikasi';
+    }
+  }
+
+  function showApp(user) {
+    document.getElementById('auth-overlay').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    document.getElementById('user-info').innerHTML = `Login Berhasil!<br>Email: <b>${user.email}</b><br>No. HP: <b>${user.phone}</b>`;
+  }
+
+  function handleLogout() {
+    localStorage.removeItem('tenang_user');
+    location.reload();
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('tenang_user');
+    if (saved) {
+      try {
+        showApp(JSON.parse(saved));
+      } catch(e) {
+        localStorage.removeItem('tenang_user');
+      }
+    }
+  });
+</script>
+</body>
+</html>
