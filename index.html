@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tenang Bu: pendamping harian ibu dan balita</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFF5F0;--sf:#fff;--tx:#3A2E39;--mt:#7A6270;--pr:#C93F63;--pt:#fff;--ac:#FFD97A;--ln:#F7DDD8;--wn:#B8431F;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 16px/1.65 Nunito,system-ui,-apple-system,"Segoe UI",sans-serif}
+.w{max-width:600px;margin:0 auto;padding:24px 20px 110px}
+h1{font-size:28px;line-height:1.2;margin:4px 0 8px;font-weight:800}
+h2{font-size:18px;margin:0 0 10px;font-weight:800}
+h3{font-size:15px;margin:18px 0 6px;font-weight:800}
+p{margin:6px 0}ul{margin:6px 0;padding-left:20px}li{margin:4px 0}
+.mt{color:var(--mt)}.sm{font-size:14px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:20px;padding:20px;margin:16px 0;box-shadow:0 2px 12px rgba(201,63,99,.06)}
+.note{font-size:13px;color:var(--mt);border-left:3px solid var(--ac);padding-left:10px;margin:14px 0}
+button{font:inherit;cursor:pointer;color:inherit}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.hero{display:block;width:100%;text-align:left;background:linear-gradient(135deg,#C93F63,#E0677F);color:var(--pt);border:0;border-radius:20px;padding:22px 20px;margin:14px 0}
+.hero b{display:block;font-size:22px;font-weight:800}.hero span{opacity:.9}
+.btn{background:var(--pr);color:var(--pt);border:0;border-radius:14px;padding:13px 22px;min-height:48px;font-weight:800}
+.btn.g{background:transparent;color:var(--pr);border:2px solid var(--pr)}
+.btn:disabled{opacity:.4}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.chip{background:var(--bg);border:1.5px solid var(--ln);border-radius:999px;padding:10px 16px;min-height:42px;font-size:15px}
+.chip.on{background:var(--pr);color:var(--pt);border-color:var(--pr);font-weight:800}
+details{border-top:1px solid var(--ln);padding:14px 0}details:first-of-type{border-top:0}
+summary{font-weight:800;cursor:pointer}
+.say{background:var(--bg);border-radius:14px;padding:12px 14px;margin:8px 0;font-weight:600}
+.no{color:var(--wn);font-weight:600}
+.tag{font-size:12px;background:var(--ac);color:#2B2433;border-radius:6px;padding:1px 7px;font-weight:800;margin-left:6px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--sf);border-top:1px solid var(--ln);display:flex;padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;background:none;border:0;border-radius:12px;padding:8px 2px;font-size:11px;font-weight:600;color:var(--mt)}
+nav button i{display:flex;justify-content:center;margin-bottom:2px;font-style:normal}
+nav button.on{color:var(--pr);font-weight:800;background:var(--bg)}
+.ov{position:fixed;inset:0;z-index:20;background:var(--bg);overflow:auto;padding:calc(14px + env(safe-area-inset-top,0px)) 16px calc(20px + env(safe-area-inset-bottom,0px))}
+.big{font-size:44px;font-weight:800;text-align:center;margin:6px 0;font-variant-numeric:tabular-nums}
+.ban{background:var(--ac);color:#2B2433;border-radius:12px;padding:10px 14px;font-weight:800;margin:8px 0}
+.br{width:130px;height:130px;border-radius:50%;background:var(--pr);color:var(--pt);display:flex;align-items:center;justify-content:center;text-align:center;font-weight:800;margin:18px auto;transition:transform 4s ease-in-out;padding:10px}
+.dots{display:flex;gap:6px;justify-content:center;margin:12px 0}.dots i{width:9px;height:9px;border-radius:50%;background:var(--ln)}.dots i.on{background:var(--pr)}
+label.ck{display:flex;gap:10px;align-items:flex-start;margin:8px 0}label.ck input{margin-top:5px;width:18px;height:18px;accent-color:var(--pr)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:90px;background:var(--tx);color:var(--bg);padding:9px 16px;border-radius:12px;font-weight:600;z-index:30}
+@media (prefers-reduced-motion:reduce){.br{transition:none}}
+a{color:var(--pr);font-weight:700}
+.gate{position:fixed;inset:0;z-index:50;background:var(--bg);overflow:auto;padding:calc(24px + env(safe-area-inset-top,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px))}
+.gate .card{max-width:420px;margin:24px auto}
+input{font:inherit;width:100%;padding:12px 14px;border:1.5px solid var(--ln);border-radius:12px;background:#fff;color:var(--tx);margin:4px 0 12px}
+.err{color:var(--wn);font-weight:700;min-height:1.6em;margin-bottom:6px}
+body.locked #app,body.locked #nav{display:none}
+details.card{padding:0}
+details.card>summary{padding:18px 20px;font-size:18px;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details.card>summary::-webkit-details-marker{display:none}
+details.card>summary::after{content:'+';color:var(--pr);font-size:24px;font-weight:600}
+details.card[open]>summary::after{content:'–'}
+details.card>div{padding:0 20px 18px}
+textarea{font:inherit;width:100%;min-height:100px;padding:12px 14px;border:1.5px solid var(--ln);border-radius:14px;background:#fff;color:var(--tx);resize:vertical;margin-top:6px}
+.warn{background:#FFF3CC;color:#3A2E39;border-radius:14px;padding:12px 14px;font-size:14px;margin-top:16px}
+.hint{font-size:13px;color:var(--mt);font-weight:600;margin-left:6px}
+.md{position:fixed;inset:0;z-index:60;background:rgba(58,46,57,.55);display:flex;align-items:center;justify-content:center;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.md .card{max-width:440px;width:100%;max-height:100%;overflow:auto;margin:0}
+.hd{display:flex;align-items:center;gap:14px;margin-bottom:6px}.hd h1{margin:0}
+.bd{flex:none;width:52px;height:52px;border-radius:16px;background:var(--ac);display:flex;align-items:center;justify-content:center;color:var(--pr)}
+.chip{display:inline-flex;align-items:center;gap:6px}
+.sm2{display:flex;align-items:center;gap:10px}.sm2 svg{flex:none}.sm2 .tag{margin-left:auto;white-space:nowrap}
+.sm2::after{content:'+';margin-left:6px;color:var(--pr);font-weight:600;font-size:20px}
+.sm2::-webkit-details-marker{display:none}
+.lr{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:12px 14px;margin:8px 0}
+.lr .lt{display:flex;flex-direction:column;flex:1;min-width:0}.lr .lt span{font-size:13px;color:var(--mt)}.lr .lh{color:var(--pr)}
+.hs{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;margin:4px -2px;scrollbar-width:none}.hs::-webkit-scrollbar{display:none}.hs .chip{flex:none}
+</style></head><body class="locked">
+<div class="w" id="app"></div><div id="ov"></div><div id="md"></div>
+<div id="gate" class="gate"><div class="card"><h1 style="font-size:26px">Halo, Ibu.</h1>
+<p class="mt">Masuk dengan email dan nomor HP yang dipakai saat order di Lynk.id.</p>
+<form onsubmit="doLogin();return false">
+<label for="ge"><b>Email</b></label><input id="ge" type="email" autocomplete="email" inputmode="email" placeholder="nama@email.com">
+<label for="gp"><b>Nomor HP</b></label><input id="gp" type="tel" autocomplete="tel" inputmode="tel" placeholder="62812xxxxxxxx">
+<div class="err" id="gmsg" role="alert"></div>
+<button class="btn" id="gb" style="width:100%">Masuk</button></form>
+<div class="warn"><svg viewBox="0 0 24 24" width="18" height="18" style="vertical-align:-3px" fill="none" stroke="#B8431F" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg> <b>Penting, Bu.</b> Catatan jurnal dan riwayat Ibu tersimpan otomatis di HP dan browser ini. Supaya tidak hilang, selalu buka aplikasi dari HP dan browser yang sama ya. Kalau ganti HP atau menghapus data browser, catatan tidak ikut pindah, tapi Ibu bisa menyimpan cadangan di tab Ibu.</div>
+<p class="sm mt" style="margin-top:16px">Belum punya akses? <a href="#" id="glk">Beli di Lynk.id</a>.</p>
+<a class="btn g" id="gwa" href="https://wa.me/62895402628720?text=Halo%20Admin%20Tenang%20Bu%2C%20saya%20mengalami%20kendala%20saat%20masuk%20ke%20aplikasi." target="_blank" rel="noopener" style="width:100%;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;padding:12px 10px;font-size:15px;line-height:1.3;white-space:nowrap"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-5l-4 3.5V16H8a3 3 0 0 1-3-3z"/></svg>Kendala masuk? Chat admin</a></div></div>
+<nav id="nav"></nav>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const mem={};
+const S={get(k,d){try{const v=localStorage.getItem(k);if(v)return JSON.parse(v)}catch(e){}return k in mem?mem[k]:d},set(k,v){mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const NV=['<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c1 1.6 2.2 2.3 3.5 2.3s2.5-.7 3.5-2.3"/><circle cx="9" cy="10" r=".9" fill="currentColor"/><circle cx="15" cy="10" r=".9" fill="currentColor"/>','<rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/>','<path d="M5 7a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-5l-4 3.5V16H8a3 3 0 0 1-3-3z"/>','<path d="M12 21v-8"/><path d="M12 13c0-3.5-2.5-5.5-6-5.5 0 3.5 2.5 5.5 6 5.5z"/><path d="M12 11c0-3 2.2-5 5.5-5 0 3-2.2 5-5.5 5z"/>','<path d="M5 5.5A1.5 1.5 0 0 1 6.5 4H19v15H6.5A1.5 1.5 0 0 0 5 20.5z"/><path d="M5 20.5A1.5 1.5 0 0 1 6.5 19H19"/><path d="M9 8h6"/>','<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.4A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>'];
+const ni=(i,z)=>`<svg viewBox="0 0 24 24" width="${z}" height="${z}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${NV[i]}</svg>`;
+const bd=i=>`<span class="bd">${ni(i,28)}</span>`;
+const HP='M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.4A4 4 0 0 1 19 10c0 5.6-7 10-7 10z';
+const ICO={heart:`<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="${HP}"/></svg>`,heartf:`<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="${HP}"/></svg>`};
+const CI={
+Gerak:['#FFE08A','<circle cx="20" cy="20" r="9.5" fill="#C93F63"/><path d="M11.5 17c5 2.4 12 2.4 17 0M11.5 23c5-2.4 12-2.4 17 0" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/>'],
+Bahasa:['#CFE6F5','<path d="M10 15a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v7a4 4 0 0 1-4 4h-8l-5 4v-4a4 4 0 0 1-3-4z" fill="#fff"/><circle cx="16" cy="18.5" r="1.7" fill="#3A7CA5"/><circle cx="20" cy="18.5" r="1.7" fill="#3A7CA5"/><circle cx="24" cy="18.5" r="1.7" fill="#3A7CA5"/>'],
+Tenang:['#CDEBDD','<path d="M12 28c0-9 6-15 17-16 0 10-6 16-15 16z" fill="#4FA37C"/><path d="M12.5 28l10-10" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>'],
+Kreatif:['#F9D0DA','<path d="M20 9c-7 0-12 4.5-12 10.5S13 30 18 30c2.5 0 2.5-2 1.5-3.2-1-1.3 0-3 1.8-3H26c3 0 5-2 5-5C31 13 26.5 9 20 9z" fill="#fff"/><circle cx="14" cy="18" r="2.2" fill="#C93F63"/><circle cx="19" cy="13.8" r="2.2" fill="#FFC93C"/><circle cx="25.5" cy="15.5" r="2.2" fill="#4FA37C"/>'],
+Belajar:['#E3D7F5','<rect x="9" y="19" width="13" height="13" rx="2.5" fill="#8E6BC9"/><rect x="18" y="9" width="13" height="13" rx="2.5" fill="#fff" stroke="#8E6BC9" stroke-width="1.6"/><text x="24.5" y="19.2" text-anchor="middle" font-size="9" font-weight="800" fill="#8E6BC9" font-family="Nunito,sans-serif">A</text>'],
+Bersama:['#F9C89B','<path d="M16 29s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 24 18c0 6-8 11-8 11z" fill="#C93F63"/><path d="M27 27s-5-3-5-7a3 3 0 0 1 5-1.6A3 3 0 0 1 32 20c0 4-5 7-5 7z" fill="#FFC93C"/>']};
+const ci=(k,z)=>`<svg viewBox="0 0 40 40" width="${z||32}" height="${z||32}" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="${CI[k][0]}"/>${CI[k][1]}</svg>`;
+const ILL={
+home:`<svg viewBox="0 0 320 180" role="img" aria-label="Ibu memeluk si kecil" style="width:100%;height:auto;display:block;margin:6px 0 4px"><ellipse cx="160" cy="166" rx="132" ry="9" fill="#F7DDD8"/><circle cx="52" cy="40" r="9" fill="#FFD97A"/><circle cx="278" cy="56" r="6" fill="#F9C0CC"/><circle cx="252" cy="24" r="4" fill="#FFD97A"/><path d="M270 106s-8-5-8-11a4.5 4.5 0 0 1 8-2.5 4.5 4.5 0 0 1 8 2.5c0 6-8 11-8 11z" fill="#C93F63" opacity=".85"/><path d="M42 92s-6-4-6-8.5a3.5 3.5 0 0 1 6-2 3.5 3.5 0 0 1 6 2c0 4.5-6 8.5-6 8.5z" fill="#FFC93C"/><path d="M78 166c0-46 18-62 40-62s40 16 40 62z" fill="#C93F63"/><rect x="108" y="86" width="20" height="22" rx="8" fill="#F2C4A8"/><circle cx="118" cy="68" r="26" fill="#F2C4A8"/><path d="M92 66a26 26 0 0 1 52 0c-8-12-34-14-52 0z" fill="#3A2E39"/><circle cx="118" cy="38" r="11" fill="#3A2E39"/><circle cx="108" cy="70" r="2.4" fill="#3A2E39"/><circle cx="128" cy="70" r="2.4" fill="#3A2E39"/><path d="M110 80q8 7 16 0" stroke="#3A2E39" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="101" cy="78" r="4.5" fill="#F4A0B0" opacity=".7"/><circle cx="135" cy="78" r="4.5" fill="#F4A0B0" opacity=".7"/><path d="M168 166c0-34 14-46 32-46s32 12 32 46z" fill="#FFC93C"/><circle cx="200" cy="96" r="22" fill="#F2C4A8"/><path d="M178 94a22 22 0 0 1 44 0c-6-10-30-12-44 0z" fill="#3A2E39"/><circle cx="192" cy="99" r="2" fill="#3A2E39"/><circle cx="208" cy="99" r="2" fill="#3A2E39"/><path d="M194 106q6 5 12 0" stroke="#3A2E39" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="186" cy="105" r="3.6" fill="#F4A0B0" opacity=".7"/><circle cx="214" cy="105" r="3.6" fill="#F4A0B0" opacity=".7"/><path d="M146 126q28 10 54 3" stroke="#C93F63" stroke-width="14" stroke-linecap="round" fill="none"/><circle cx="201" cy="129" r="6.5" fill="#F2C4A8"/></svg>`,
+book:`<svg viewBox="0 0 120 90" width="120" height="90" aria-hidden="true" style="display:block;margin:0 auto 6px"><rect x="26" y="10" width="68" height="72" rx="10" fill="#fff" stroke="#F7DDD8" stroke-width="3"/><rect x="26" y="10" width="14" height="72" rx="7" fill="#C93F63"/><path d="M52 32h30M52 46h30M52 60h20" stroke="#F7DDD8" stroke-width="4" stroke-linecap="round"/><path d="M88 14l8 8-16 16-9 2 2-9z" fill="#FFC93C"/></svg>`};
+function sprout(n){let l='';for(let i=0;i<n;i++){const sd=i%2?1:-1,y=96-i*10;l+=`<ellipse cx="${60+sd*13}" cy="${y}" rx="12" ry="5" transform="rotate(${sd*-25} ${60+sd*13} ${y})" fill="#4FA37C"/>`}
+ const top=100-n*11-6,fl=n==7?`<g><circle cx="60" cy="${top-6}" r="7" fill="#FFC93C"/>${[0,72,144,216,288].map(a=>`<circle cx="${60+11*Math.cos(a*Math.PI/180)}" cy="${top-6+11*Math.sin(a*Math.PI/180)}" r="5" fill="#F9A8BC"/>`).join('')}<circle cx="60" cy="${top-6}" r="6" fill="#FFC93C"/></g>`:'';
+ return `<svg viewBox="0 0 120 120" role="img" aria-label="Tunas tumbuh ${n} dari 7" style="width:100%;height:auto;display:block"><ellipse cx="60" cy="116" rx="36" ry="4" fill="#F7DDD8"/><path d="M60 100V${n?top:88}" stroke="#4FA37C" stroke-width="4" stroke-linecap="round"/>${n?'':'<ellipse cx="53" cy="88" rx="7" ry="3.5" transform="rotate(-25 53 88)" fill="#4FA37C"/><ellipse cx="67" cy="88" rx="7" ry="3.5" transform="rotate(25 67 88)" fill="#4FA37C"/>'}${l}${fl}<path d="M42 100h36l-4 16H46z" fill="#C93F63"/></svg>`}
+const TABS=[[ni(0,24),'Tantrum'],[ni(1,24),'Layar'],[ni(2,24),'Kata'],[ni(3,24),'7 Hari'],[ni(4,24),'Jurnal'],[ni(5,24),'Ibu']];
+let tab=0;
+const toast=m=>{const e=document.createElement('div');e.className='toast';e.textContent=m;document.body.append(e);setTimeout(()=>e.remove(),2200)};
+const go=i=>{tab=i;draw();scrollTo(0,0)};
+
+/* ---------- Panduan tantrum ---------- */
+const GS=[
+{t:'Tarik napas dulu, Ibu',b:'Si kecil boleh menangis. Yang paling bisa Ibu lakukan sekarang adalah menenangkan diri sendiri dulu. Anak belajar tenang dari ketenangan Ibu.',br:1},
+{t:'Pastikan sekitarnya aman',b:'Jauhkan benda keras atau tajam. Kalau sedang di luar, pindah ke sudut yang lebih sepi. Tidak perlu malu, hampir semua ibu pernah mengalaminya.'},
+{t:'Turunkan badan dan suara',b:'Duduk sejajar dengan mata si kecil dan bicara pelan. Saat sedang meledak, anak belum bisa diajak berpikir, jadi sedikit kata sudah cukup.'},
+{t:'Bantu sebut perasaannya',b:['Satu kalimat pendek saja.','Sebut perasaannya, lalu batasnya dengan lembut.'],s:['“Adik marah ya. Ibu di sini.”','“Kakak kesal karena TV-nya dimatikan. Kesal boleh, tapi memukul tidak ya.”']},
+{t:'Temani sampai reda',b:['Tawarkan pelukan, tanpa memaksa. Kalau ia menolak, duduk saja di dekatnya. Tetap pada aturan yang sudah disepakati, supaya ia merasa aman karena tahu batasnya.','Tawarkan sudut tenang, atau ajak tarik napas dan hitung sampai 5 bersama. Tetap pada aturan yang sudah disepakati.'],s:['“Ibu tunggu di sini sampai Adik siap.”','“Mau dipeluk atau sendiri dulu? Ibu tunggu.”']},
+{t:'Setelah tenang',b:['Peluk, lalu ajak ke kegiatan lain. Tidak perlu ceramah. Ibu sudah melakukan yang terbaik hari ini.','Ngobrol singkat, satu atau dua kalimat: apa yang terjadi dan apa yang bisa dilakukan lain kali. Puji saat ia berhasil tenang. Ibu sudah melakukan yang terbaik hari ini.'],s:['“Sudah tenang ya. Yuk kita main balok.”','“Tadi Kakak marah sekali, sekarang sudah tenang. Lain kali bilang ‘aku mau lima menit lagi’ ya.”'],end:1}];
+let g={age:0,i:0,iv:null};
+const pk=x=>Array.isArray(x)?x[g.age]:x;
+function openGuide(){g={age:g.age||0,i:0,iv:null};gDraw()}
+function closeGuide(){clearInterval(g.iv);$('#ov').innerHTML=''}
+function gDraw(){
+ clearInterval(g.iv);const s=GS[g.i];
+ $('#ov').innerHTML=`<div class="ov"><div class="w" style="padding-bottom:20px">
+ <div class="row" style="justify-content:space-between;align-items:center"><b>Panduan tantrum</b><button class="btn g" onclick="closeGuide()">Tutup</button></div>
+ <div class="row">${['Anak 1–3 tahun','Anak 4–6 tahun'].map((a,i)=>`<button class="chip ${g.age==i?'on':''}" onclick="g.age=${i};gDraw()">${a}</button>`).join('')}</div>
+ <div class="dots">${GS.map((_,i)=>`<i class="${i<=g.i?'on':''}"></i>`).join('')}</div>
+ <div class="card"><p class="mt sm">Langkah ${g.i+1} dari ${GS.length}</p><h2>${s.t}</h2><p>${pk(s.b)}</p>
+ ${s.s?`<div class="say">${pk(s.s)}</div>`:''}
+ ${s.br?`<div class="br" id="br">Siap?</div><div class="row" style="justify-content:center"><button class="btn" onclick="breathe()">Mulai napas 3 kali</button></div>`:''}
+ ${s.end?`<h3 class="no">Sebaiknya dihindari</h3><p class="sm">Mengancam, memukul, mempermalukan anak, atau menuruti permintaannya hanya supaya cepat diam.</p>`:''}</div>
+ <div class="row" style="justify-content:space-between">
+ <button class="btn g" ${g.i?'':'disabled'} onclick="g.i--;gDraw()">Kembali</button>
+ ${g.i<GS.length-1?`<button class="btn" onclick="g.i++;gDraw()">Lanjut</button>`:`<button class="btn" onclick="closeGuide();go(4)">Catat di jurnal</button>`}</div>
+ <p class="note">Sering tantrum hingga melukai diri atau orang lain, atau sangat lama? Konsultasikan ke dokter anak atau psikolog anak.</p></div></div>`}
+function breathe(){
+ const c=$('#br');let n=0,up=true;clearInterval(g.iv);
+ const step=()=>{if(n>=3){clearInterval(g.iv);c.style.transform='scale(1)';c.textContent='Sudah. Lanjut ya, Bu.';return}
+  c.textContent=up?'Tarik napas… 4 detik':'Hembuskan… 4 detik';c.style.transform=up?'scale(1.45)':'scale(1)';if(!up)n++;up=!up};
+ step();g.iv=setInterval(step,4000)}
+
+/* ---------- Layar ---------- */
+let tm=null;
+const IDEAS=[
+['a','Tangkap gelembung','Air, sabun cuci piring, sedotan','Tiup gelembung, ajak anak menangkap dan menunjuknya.','Melatih fokus mata dan gerak badan.'],
+['a','Kotak harta','Kardus, benda rumah yang aman dan besar (sendok kayu, kain, gelas plastik)','Isi kardus, biarkan anak mengeluarkan dan menyebut bendanya.','Rasa ingin tahu dan kosakata.'],
+['a','Pindah air dengan spons','Dua baskom, spons','Anak memindahkan air dari satu baskom ke baskom lain.','Motorik halus dan koordinasi tangan.'],
+['a','Musik panci','Panci, sendok kayu','Pukul pelan mengikuti irama lagu sederhana.','Ritme dan pendengaran.'],
+['a','Jalan titian','Selotip kertas di lantai','Tempel garis lurus atau zig-zag, anak berjalan di atasnya.','Keseimbangan dan motorik kasar.'],
+['a','Tebak suara','Benda rumah yang berbunyi','Bunyikan benda di balik punggung, anak menebak.','Pendengaran dan konsentrasi.'],
+['a','Cilukba benda','Kain tipis, mainan besar','Tutup mainan dengan kain, anak membukanya sambil “ciluk ba”.','Ingatan dan rasa senang.'],
+['a','Lempar bola ke keranjang','Bola besar, keranjang','Anak melempar bola ke dalam keranjang.','Koordinasi tangan dan mata.'],
+['a','Robohkan menara kardus','Kotak kardus bekas','Susun kotak, lalu robohkan bersama sambil tertawa.','Motorik kasar, sebab-akibat.'],
+['a','Menggambar di tepung','Tepung maizena, nampan','Anak menggambar dengan jari. Awasi agar tidak dimakan.','Sensorik dan motorik halus.'],
+['a','Melukis dengan air','Kuas, air, kardus','Anak melukis kardus dengan air, tanpa cat dan tanpa belepotan.','Motorik halus.'],
+['a','Berjalan seperti hewan','Tidak perlu alat','Ajak berjalan seperti bebek, kucing, dan katak.','Gerak kasar dan imajinasi.'],
+['a','Menari dengan pita','Kain atau pita panjang','Putar musik, lalu menari sambil melambaikan kain.','Ritme dan keseimbangan.'],
+['a','Tebak suara hewan','Tidak perlu alat','Ibu menirukan suara hewan, anak menebak.','Kosakata dan pendengaran.'],
+['a','Ambil dan sebutkan','Benda rumah yang aman','Minta anak mengambil benda tertentu, lalu menyebut namanya.','Kosakata dan mengikuti perintah.'],
+['a','Gelas bersarang','Gelas plastik beda ukuran','Anak memasukkan gelas kecil ke gelas yang lebih besar.','Konsep ukuran.'],
+['a','Mencuci mainan','Baskom, sabun, sikat','Anak menyikat mainan plastik di baskom.','Motorik dan rasa mandiri.'],
+['a','Membantu menyapu','Sapu kecil','Anak ikut menyapu bagian lantai yang kecil.','Rasa berguna dan koordinasi.'],
+['a','Bola kertas ke kotak','Kertas bekas, kotak','Remas kertas jadi bola, lalu masukkan ke kotak.','Kekuatan tangan.'],
+['a','Meremas adonan','Adonan tepung dan garam','Anak meremas dan menekan adonan. Awasi agar tidak ditelan.','Sensorik dan kekuatan jari.'],
+['a','Cap telapak tangan','Cat aman anak, kertas','Cap tangan di kertas, lalu hias bersama.','Sensorik dan kreativitas.'],
+['a','Lompat bantal','Bantal','Susun bantal rendah di lantai, anak melangkah atau melompat.','Keseimbangan.'],
+['a','Terowongan kardus','Kardus besar','Anak merangkak melewati terowongan.','Motorik kasar.'],
+['a','Tepuk lagu','Lagu sederhana','Bertepuk tangan mengikuti irama lagu.','Ritme dan bahasa.'],
+['a','Mendandani boneka','Boneka, kain','Pakaikan kain ke boneka sambil menyebut bagian tubuh.','Imajinasi dan kosakata.'],
+['a','Menyuapi boneka','Boneka, sendok plastik','Anak pura-pura menyuapi boneka makan.','Imajinasi dan kemandirian.'],
+['a','Tunjuk di buku','Buku bergambar','Tanya “mana kucing?” dan anak menunjuk gambarnya.','Bahasa dan fokus.'],
+['a','Memasangkan sepatu','Sepatu anggota keluarga','Anak mencari pasangan tiap sepatu.','Mencocokkan.'],
+['a','Menyortir warna','Mangkuk, benda besar berwarna','Pisahkan benda besar sesuai warna. Hindari benda kecil.','Mengenal warna.'],
+['a','Ikuti gerakan Ibu','Tidak perlu alat','Ibu menepuk, melambai, atau melompat, anak meniru.','Meniru dan fokus.'],
+['a','Mandi busa mainan','Busa sabun, baskom','Cuci mainan di busa. Dampingi selalu.','Sensorik.'],
+['a','Mobil kardus','Kardus besar, tali','Anak duduk di kardus dan ditarik pelan.','Rasa senang dan keseimbangan.'],
+['a','Gulirkan bola','Bola','Duduk berhadapan, gulirkan bola bergantian.','Bergiliran dan koordinasi.'],
+['a','Tendang bola','Bola ringan','Letakkan bola, anak menendangnya.','Motorik kasar.'],
+['a','Menyusun balok','Balok besar','Susun balok setinggi mungkin, lalu robohkan.','Koordinasi dan kesabaran.'],
+['a','Masukkan ke lubang','Kardus berlubang, mainan besar','Anak memasukkan mainan besar ke lubang kardus.','Mencocokkan bentuk.'],
+['a','Lagu jari','Tidak perlu alat','Nyanyikan lagu berhitung sambil menunjuk jari.','Berhitung dan bahasa.'],
+['a','Halus dan kasar','Beberapa potong kain','Anak meraba kain dan menyebut “halus” atau “kasar”.','Indra peraba dan kosakata.'],
+['a','Pesta teh','Cangkir plastik, boneka','Pura-pura minum teh bersama boneka.','Imajinasi dan sosial.'],
+['a','Di tangan mana?','Mainan besar','Sembunyikan mainan di satu tangan, anak menebak.','Fokus dan ingatan.'],
+['a','Bermain cermin','Cermin yang aman','Ibu membuat ekspresi, anak menirukan di depan cermin.','Mengenal perasaan.'],
+['a','Ikuti suara musik','Musik, pita atau kain','Bergerak cepat atau pelan mengikuti musik.','Ritme dan kontrol tubuh.'],
+['a','Meremas koran','Koran bekas','Anak meremas dan merobek koran sepuasnya.','Motorik halus.'],
+['a','Perahu di baskom','Baskom, mainan terapung','Anak mendorong perahu atau meniupnya pelan.','Sebab-akibat.'],
+['a','Tempel stiker besar','Stiker besar, kertas','Anak menempel stiker di kertas.','Motorik halus.'],
+['a','Pasar-pasaran','Tas, sayur atau buah besar','Anak “belanja” dan menyebut nama barangnya.','Kosakata dan imajinasi.'],
+['a','Rumah selimut','Selimut, kursi','Buat kemah kecil, lalu baca buku di dalamnya.','Rasa aman dan imajinasi.'],
+['a','Lagu cuci tangan','Air, sabun','Cuci tangan sambil bernyanyi sampai selesai.','Kebiasaan sehat.'],
+['a','Menyiram tanaman','Gelas kecil, tanaman','Anak menyiram tanaman dengan gelas kecil.','Tanggung jawab.'],
+['a','Tunjuk bagian tubuh','Tidak perlu alat','Tanya “mana hidung?”, lalu bergantian.','Kosakata tubuh.'],
+['b','Petak umpet','Halaman atau rumah','Satu anak bersembunyi, yang lain menghitung lalu mencari.','Berhitung dan sabar.'],
+['b','Ibu bilang','Tidak perlu alat','Lakukan gerakan hanya kalau didahului “Ibu bilang”.','Fokus dan mendengar.'],
+['b','Berburu harta','Kertas, krayon, kotak','Gambar peta rumah, sembunyikan “harta” di satu tempat.','Membaca simbol.'],
+['b','Gambar bergantian','Kertas, krayon','Bergantian menambah satu garis sampai jadi gambar.','Kreativitas.'],
+['b','Cerita sambung','Tidak perlu alat','Setiap orang menambah satu kalimat pada cerita.','Bahasa dan imajinasi.'],
+['b','Balap sendok','Sendok, bola plastik ringan','Berjalan sambil membawa bola di sendok tanpa jatuh.','Keseimbangan.'],
+['b','Membuat roti isi','Roti, selai','Anak mengoles selai sendiri, lalu makan bersama.','Motorik halus dan mandiri.'],
+['b','Menanam kacang hijau','Pot kecil, kapas, kacang hijau','Tanam dan amati pertumbuhannya tiap hari.','Sabar dan sains sederhana.'],
+['b','Terapung atau tenggelam','Baskom, benda rumah','Tebak dulu, lalu coba satu per satu.','Sains sederhana.'],
+['b','Gunung berapi soda kue','Soda kue, cuka, wadah','Tuang cuka ke soda kue. Ibu dampingi, jauhkan dari mata.','Rasa ingin tahu.'],
+['b','Pesawat kertas','Kertas','Lipat pesawat, lalu adu terbang paling jauh.','Motorik halus.'],
+['b','Topeng kertas','Piring kertas, krayon','Gambar wajah di piring kertas dan pakai untuk bermain peran.','Kreativitas.'],
+['b','Drama keluarga','Kain, barang rumah','Pilih cerita pendek dan mainkan bersama dengan kostum kain.','Bermain peran.'],
+['b','Menyusun puzzle','Puzzle 12–24 keping','Susun bersama, mulai dari bagian tepi.','Logika dan sabar.'],
+['b','Kartu ingatan','Kartu gambar buatan sendiri','Balik dua kartu, cari pasangan yang sama.','Ingatan.'],
+['b','Bingo angka','Kertas, krayon','Buat kotak angka 1–9, coret angka yang disebut.','Mengenal angka.'],
+['b','Lompat tali','Tali','Lompati tali yang diletakkan di lantai lalu dinaikkan sedikit.','Motorik kasar.'],
+['b','Pasar uang-uangan','Uang mainan, barang rumah','Satu jadi penjual, satu pembeli.','Berhitung dan bahasa.'],
+['b','Susun huruf namanya','Kartu huruf dari kertas','Susun huruf nama sendiri, lalu nama anggota keluarga.','Mengenal huruf.'],
+['b','Huruf pertama','Benda rumah','Tanya “apa yang diawali huruf B?” lalu cari bersama.','Bunyi huruf.'],
+['b','Estafet keluarga','Tongkat dari gulungan kertas','Berlari bergantian membawa tongkat.','Motorik kasar dan kerja sama.'],
+['b','Sambung kata','Tidak perlu alat','Kata terakhir jadi kata pertama berikutnya.','Kosakata.'],
+['b','Gambar dari bentuk','Kertas, krayon','Mulai dari lingkaran atau segitiga, jadikan gambar.','Kreativitas.'],
+['b','Menara balok','Balok','Bangun setinggi bahu anak sambil menghitung tingkatnya.','Kesabaran.'],
+['b','Ukur pakai telapak','Tidak perlu alat','Ukur panjang meja dengan telapak tangan, lalu telapak Ibu.','Konsep ukuran.'],
+['b','Timbangan tangan','Gantungan baju, dua kantong','Bandingkan berat dua benda dan tebak yang lebih berat.','Sains sederhana.'],
+['b','Pola warna','Benda besar berwarna','Susun merah-biru-merah-biru, anak melanjutkan.','Pola.'],
+['b','Menjahit kartu','Karton berlubang, tali sepatu','Anak menjahit mengikuti lubang.','Motorik halus.'],
+['b','Mewarnai pola','Kertas, krayon','Warnai pola sederhana tanpa aturan waktu.','Ketenangan.'],
+['b','Menulis di tepung','Nampan, tepung','Tulis angka atau huruf dengan jari.','Persiapan menulis.'],
+['b','Menggunting garis','Gunting anak, kertas','Gunting garis lurus lalu zig-zag. Dampingi.','Motorik halus.'],
+['b','Kolase kertas','Kertas bekas, lem','Tempel potongan kertas jadi gambar.','Kreativitas.'],
+['b','Bercerita dari gambar','Buku tanpa kata atau foto','Anak menceritakan isi gambar.','Bahasa.'],
+['b','Tebak perasaan','Kartu perasaan (PDF)','Tunjuk satu kartu, anak menebak dan menirukan perasaannya.','Empati.'],
+['b','Napas perut','Boneka kecil','Berbaring, taruh boneka di perut, naik-turunkan dengan napas.','Ketenangan.'],
+['b','Yoga hewan','Tidak perlu alat','Pose kucing, katak, dan burung bersama.','Keseimbangan dan tenang.'],
+['b','Botol tenang','Botol, air, glitter, lem','Kocok botol, lalu amati glitter turun pelan.','Menenangkan.'],
+['b','Lomba merapikan','Mainan, lagu','Rapikan mainan sampai lagunya selesai.','Tanggung jawab.'],
+['b','Menata meja','Piring plastik','Anak menata piring dan sendok untuk keluarga.','Tanggung jawab.'],
+['b','Kartu ucapan','Kertas, krayon','Buat kartu untuk kakek atau nenek.','Rasa syukur.'],
+['b','Cari bentuk di rumah','Tidak perlu alat','Cari benda berbentuk lingkaran, lalu persegi.','Mengenal bentuk.'],
+['b','Dokter-dokteran','Boneka, alat mainan','Anak merawat boneka yang “sakit”.','Empati.'],
+['b','Piknik ruang tamu','Alas, bekal','Gelar alas di ruang tamu dan makan bekal bersama.','Kebersamaan.'],
+['b','Kuis hewan','Tidak perlu alat','Tanya “hewan apa yang bertelur dan bisa terbang?”','Pengetahuan.'],
+['b','Berburu warna','Tidak perlu alat','Sebut satu warna, anak mencari benda berwarna itu di rumah.','Mengenal warna dan mengamati.'],
+['b','Kantong tebak benda','Kantong kain, benda rumah','Anak meraba tanpa melihat lalu menebak.','Indra peraba dan bahasa.'],
+['b','Lompat petak','Selotip kertas','Buat petak bernomor di lantai, anak melompat sambil berhitung.','Berhitung dan motorik kasar.'],
+['b','Menara gelas','Gelas plastik','Susun setinggi mungkin, lalu robohkan bersama.','Koordinasi mata dan tangan, kesabaran.'],
+['b','Boneka kaus kaki','Kaus kaki bekas, spidol','Gambar wajah, lalu buat cerita sederhana bersama.','Imajinasi dan bahasa.'],
+['b','Lomba tiup kapas','Kapas, sedotan','Tiup kapas dari garis awal ke garis akhir.','Kontrol napas dan fokus.']];
+let ia='a',ic='all',iq='';
+function cat(x){const m=x[4].toLowerCase();
+ if(/tenang|menenangkan/.test(m))return 'Tenang';
+ if(/motorik|keseimbangan|koordinasi|gerak|ritme|kontrol tubuh/.test(m))return 'Gerak';
+ if(/bahasa|kosakata|bunyi/.test(m))return 'Bahasa';
+ if(/kreativ|imajinasi/.test(m))return 'Kreatif';
+ if(/sains|hitung|angka|huruf|bentuk|ukuran|logika|ingatan|warna|pola|mencocokkan|konsep|pengetahuan|fokus|menulis|sebab|sabar/.test(m))return 'Belajar';
+ return 'Bersama'}
+function iqf(v){iq=(v||'').toLowerCase();let n=0;document.querySelectorAll('#ideas details').forEach(d=>{const ok=d.dataset.t.includes(iq);d.style.display=ok?'':'none';if(ok)n++});const e=document.getElementById('icnt');if(e)e.textContent=n+' ide ditampilkan'}
+function tStart(m){tm={end:Date.now()+m*60000,w5:0,w1:0,done:0};clearInterval(tm.id);tm.id=setInterval(tTick,500);tTick()}
+function tStop(){clearInterval(tm&&tm.id);tm=null;draw()}
+function tTick(){
+ if(!tm)return;const r=Math.max(0,Math.round((tm.end-Date.now())/1000));
+ const v=n=>{try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}};
+ if(r<=300&&!tm.w5){tm.w5=1;v(200)}if(r<=60&&!tm.w1){tm.w1=1;v(200)}
+ if(r==0&&!tm.done){tm.done=1;clearInterval(tm.id);v([300,100,300])}
+ const e=$('#tm');if(!e)return;
+ e.querySelector('.big').textContent=String(Math.floor(r/60)).padStart(2,'0')+':'+String(r%60).padStart(2,'0');
+ e.querySelector('.ban').textContent=r==0?'Waktu habis. Matikan bersama anak, lalu ajak ke kegiatan berikutnya.':r<=60?'Sisa 1 menit. Ingatkan anak sekarang.':r<=300?'Sisa 5 menit. Beri tahu anak bahwa sebentar lagi selesai.':'Layar sedang berjalan. Ibu tetap temani ya.'}
+function vLayar(){
+ const rules=['Tidak ada layar saat makan','Tidak ada layar 1 jam sebelum tidur','Waktu layar di jam yang sama setiap hari','Ayah dan Ibu sama-sama mengurangi HP di dekat si kecil','Semua pengasuh sudah tahu aturannya'];
+ const ck=S.get('rules',[]);
+ const fav=S.get('fav',[]);const list=IDEAS.filter(x=>(ia=='all'||x[0]==ia||(ia=='fav'&&fav.includes(IDEAS.indexOf(x))))&&(ic=='all'||cat(x)==ic));
+ return `<div class="hd">${bd(1)}<h1>Layar tanpa drama</h1></div><p class="mt">Pelan-pelan saja, Ibu. Ini batas yang wajar, timer, dan ide pengganti layar.</p>
+ <div class="card"><h2>Berapa lama yang wajar?</h2><ul><li><b>Di bawah 2 tahun:</b> tidak dianjurkan, kecuali video call dengan keluarga (anjuran IDAI).</li><li><b>2 tahun ke atas:</b> maksimal 1 jam per hari, makin sedikit makin baik.</li></ul><p class="sm mt">Wajar kalau si kecil protes saat tontonan berhenti, bahkan tontonan edukatif pun begitu. Akhir yang jelas akan membantunya.</p></div>
+ <div class="card"><h2>Timer layar</h2>${tm?`<div id="tm"><div class="big">--:--</div><div class="ban"></div></div><div class="row"><button class="btn g" onclick="tStop()">Hentikan timer</button></div>`:`<p class="sm mt">Pilih durasi. Aplikasi mengingatkan di sisa 5 menit dan 1 menit.</p><div class="row">${[10,20,30,45,60].map(m=>`<button class="chip" onclick="tStart(${m});draw()">${m} menit</button>`).join('')}</div>`}<p class="note">Biarkan halaman ini tetap terbuka agar pengingat berjalan.</p></div>
+ <details class="card"><summary>Aturan keluarga</summary><div>${rules.map((r,i)=>`<label class="ck"><input type="checkbox" ${ck.includes(i)?'checked':''} onchange="rl(${i},this.checked)"><span>${r}</span></label>`).join('')}</div></details>
+ <details class="card"><summary>Cara mengakhiri layar</summary><div><ul><li>Peringatkan di sisa 5 menit dan 1 menit.</li><li>Beri pilihan: <i>“Mau Ibu matikan, atau kamu yang matikan?”</i></li><li>Sebutkan kegiatan sesudahnya: <i>“Habis ini kita main gelembung.”</i></li><li>Kalau tetap menangis, buka tab Tantrum.</li></ul></div></details>
+ <div class="card"><h2>Ide pengganti layar</h2><p class="sm mt">100 ide main di rumah untuk usia 1–6 tahun, lengkap dengan bahan dan caranya.</p><div class="row" style="gap:6px">${['Gerak','Bahasa','Tenang','Kreatif','Belajar','Bersama'].map(k=>ci(k,34)).join('')}</div><div class="row"><button class="btn" onclick="ia='a';ic='all';iq='';libDraw()">Lihat semua ide</button>${S.get('fav',[]).length?`<button class="chip" onclick="ia='fav';ic='all';iq='';libDraw()">${ICO.heartf} ${S.get('fav',[]).length} favorit</button>`:''}</div><p class="note">Untuk anak kecil, dampingi selalu dan jauhkan benda yang bisa tertelan.</p></div>`}
+function fv(i){let f=S.get('fav',[]);f=f.includes(i)?f.filter(x=>x!=i):[...f,i];S.set('fav',f);draw()}
+function bk(){const d={app:'tenang-bu',v:1,t:Date.now(),jr:S.get('jr',[]),prog:S.get('prog',[]),fav:S.get('fav',[]),rules:S.get('rules',[])};
+ try{const b=new Blob([JSON.stringify(d)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='cadangan-tenang-bu-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),3000);bkHelp(2)}catch(e){toast('Cadangan gagal disimpan')}}
+function rs(f){if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.app!='tenang-bu')throw 0;
+ const u=(a,b)=>[...new Set([...(Array.isArray(a)?a:[]),...(Array.isArray(b)?b:[])].filter(x=>typeof x=='number'))];
+ const jr=S.get('jr',[]),ids=new Set(jr.map(x=>x.t));
+ const add=(Array.isArray(d.jr)?d.jr:[]).filter(x=>x&&typeof x.t=='number'&&!ids.has(x.t)).map(x=>({t:x.t,tr:String(x.tr||'').slice(0,60),du:String(x.du||'').slice(0,60),wk:String(x.wk||'').slice(0,60),nt:String(x.nt||'').slice(0,500)}));
+ S.set('jr',[...jr,...add].sort((p,q)=>q.t-p.t).slice(0,200));
+ S.set('prog',u(S.get('prog',[]),d.prog));S.set('fav',u(S.get('fav',[]),d.fav));S.set('rules',u(S.get('rules',[]),d.rules));
+ toast('Berhasil: '+add.length+' catatan dipulihkan');draw()}catch(e){toast('File cadangan tidak dikenali')}};r.readAsText(f)}
+function libClose(){$('#ov').innerHTML='';draw()}
+function libList(){const fav=S.get('fav',[]);
+ const L=IDEAS.map((x,i)=>[x,i]).filter(([x,i])=>(ia=='all'||x[0]==ia||(ia=='fav'&&fav.includes(i)))&&(ic=='all'||cat(x)==ic)&&(x[1]+' '+x[2]+' '+x[3]).toLowerCase().includes(iq));
+ $('#lst').innerHTML=L.length?L.map(([x,i])=>`<button class="lr" onclick="libOne(${i})">${ci(cat(x),40)}<span class="lt"><b>${x[1]}</b><span>${x[0]=='a'?'1–3 th':'4–6 th'} · ${x[4]}</span></span>${fav.includes(i)?`<span class="lh">${ICO.heartf}</span>`:''}</button>`).join(''):'<p class="mt" style="text-align:center;padding:24px 0">Belum ada yang cocok. Coba kata lain, ya.</p>';
+ $('#lcn').textContent=L.length+' ide'}
+function libDraw(){
+ $('#ov').innerHTML=`<div class="ov"><div class="w" style="padding-bottom:30px"><div class="row" style="justify-content:space-between;align-items:center;flex-wrap:nowrap;margin-top:0"><h1 style="font-size:22px;margin:0">Ide pengganti layar</h1><button class="btn g" style="min-height:40px;padding:8px 16px" onclick="libClose()">Tutup</button></div>
+ <input id="iq" type="search" placeholder="Cari ide, misalnya: kardus" value="${esc(iq)}" oninput="iq=this.value.toLowerCase();libList()">
+ <div class="hs">${[['all','Semua'],['a','1–3 th'],['b','4–6 th'],['fav','Favorit']].map(a=>`<button class="chip ${ia==a[0]?'on':''}" onclick="ia='${a[0]}';libDraw()">${a[0]=='fav'?ICO.heart+' ':''}${a[1]}</button>`).join('')}</div>
+ <div class="hs">${['all','Gerak','Bahasa','Tenang','Kreatif','Belajar','Bersama'].map(k=>`<button class="chip ${ic==k?'on':''}" onclick="ic='${k}';libDraw()">${k=='all'?'Semua kategori':ci(k,22)+' '+k}</button>`).join('')}</div>
+ <p class="sm mt" id="lcn"></p><div id="lst"></div></div></div>`;libList()}
+function libOne(i){const x=IDEAS[i],f=S.get('fav',[]).includes(i);
+ $('#md').innerHTML=`<div class="md" onclick="if(event.target===this)bkClose()"><div class="card" role="dialog" aria-modal="true"><div style="display:flex;gap:12px;align-items:center">${ci(cat(x),48)}<div><h2 style="margin:0">${x[1]}</h2><span class="tag" style="margin:0">${x[0]=='a'?'1–3 th':'4–6 th'}</span> <span class="sm mt">${cat(x)}</span></div></div>
+ <h3>Bahan</h3><p>${x[2]}</p><h3>Cara</h3><p>${x[3]}</p><h3>Manfaat</h3><p>${x[4]}</p>
+ <div class="row"><button class="btn" onclick="fv2(${i})">${f?ICO.heartf+' Tersimpan':ICO.heart+' Simpan'}</button><button class="btn g" onclick="bkClose()">Tutup</button></div></div></div>`}
+function fv2(i){let f=S.get('fav',[]);f=f.includes(i)?f.filter(x=>x!=i):[...f,i];S.set('fav',f);libOne(i);libList()}
+function bkClose(){$('#md').innerHTML=''}
+function bkHelp(t){
+ const S1=['Buka tab <b>Ibu</b>, lalu cari kartu <b>Cadangan catatan</b>.','Ketuk <b>Simpan cadangan</b>. Sebuah file kecil berakhiran <b>.json</b> akan terunduh.','Simpan file itu di tempat aman, misalnya Google Drive, atau kirim ke WhatsApp Ibu sendiri.'];
+ const S2=['Buka aplikasi di HP baru dan masuk dengan <b>email dan nomor HP yang sama</b>.','Buka tab <b>Ibu</b>, ketuk <b>Pulihkan</b>, lalu pilih file cadangan tadi.','Catatan lama muncul kembali. Catatan baru di HP ini tidak hilang.'];
+ const S3=['Cari file <b>cadangan-tenang-bu</b> di folder <b>Unduhan</b> (Downloads) HP Ibu.','Pindahkan atau kirim ke tempat aman, misalnya Google Drive atau WhatsApp Ibu sendiri.','Di HP baru nanti, buka tab <b>Ibu</b> lalu ketuk <b>Pulihkan</b>.'];
+ const L=t==2?S3:t==1?S2:S1,head=t==2?'Cadangan sudah tersimpan':'Cara mencadangkan catatan';
+ $('#md').innerHTML=`<div class="md" onclick="if(event.target===this)bkClose()"><div class="card" role="dialog" aria-modal="true" aria-label="${head}"><h2>${head}</h2>
+ ${t==2?'':`<div class="row"><button class="chip ${t==0?'on':''}" onclick="bkHelp(0)">Simpan cadangan</button><button class="chip ${t==1?'on':''}" onclick="bkHelp(1)">Pulihkan di HP baru</button></div>`}
+ ${L.map((x,i)=>`<div style="display:flex;gap:12px;margin:14px 0"><span style="flex:none;width:30px;height:30px;border-radius:50%;background:var(--pr);color:var(--pt);display:flex;align-items:center;justify-content:center;font-weight:800">${i+1}</span><span>${x}</span></div>`).join('')}
+ <p class="note">Simpan cadangan sebelum ganti HP atau menghapus data browser. Lebih baik rutin, misalnya sebulan sekali.</p>
+ <div class="row">${t==0?'<button class="btn" onclick="bkClose();bk()">Simpan cadangan sekarang</button>':''}<button class="btn g" onclick="bkClose()">${t==2?'Mengerti':'Tutup'}</button></div></div></div>`}
+function rl(i,on){let c=S.get('rules',[]);c=on?[...new Set([...c,i])]:c.filter(x=>x!=i);S.set('rules',c)}
+
+/* ---------- Kata ---------- */
+const SC=[
+['Si kecil tidak mau berhenti nonton',['“Sebentar lagi selesai ya, lima menit lagi.”','“Mau Ibu yang matikan, atau Adik yang matikan?”','“Habis ini kita main gelembung yuk.”'],'Mengambil HP atau remote tiba-tiba tanpa aba-aba.','Beri aba-aba dua kali dan pakai timer yang sama setiap hari. Anak lebih mudah menerima hal yang bisa ia duga.'],
+['Si kecil menolak makan',['“Ibu taruh di piring ya. Mau makan yang mana dulu?”','“Kalau belum mau, tidak apa-apa. Kita coba lagi di jam makan berikutnya.”'],'Memarahi, memaksa, atau menyuapi sambil memberi gawai.','Buat suasana makan yang santai dan tidak terlalu dekat dengan jam tidur. Kalau berlangsung lama atau berat badannya turun, tanyakan ke dokter anak.'],
+['Minta dibelikan sesuatu di toko',['“Adik ingin sekali ya. Hari ini kita belum beli itu.”','“Mau bantu Ibu pegang troli atau cari apel?”'],'Membelikan demi menghentikan tangisan.','Sebelum masuk toko, sebutkan aturannya dan beri tugas kecil supaya ia merasa dilibatkan.'],
+['Tidak mau tidur',['“Sebentar lagi waktunya tidur. Mau Ibu bacakan buku yang mana?”','“Ibu temani lima menit, lalu Ibu keluar ya.”'],'Menakut-nakuti atau mengancam.','Urutan yang sama tiap malam (mandi, sikat gigi, buku, tidur) dan tanpa layar satu jam sebelumnya.'],
+['Memukul atau melempar',['“Berhenti ya. Ibu tidak membiarkan Adik memukul.”','“Adik marah. Boleh pukul bantal, jangan pukul Ibu.”'],'Membalas memukul atau berteriak.','Hentikan tangannya dengan tenang. Bicarakan setelah ia reda, karena saat marah ia belum bisa mendengar.'],
+['Rebutan mainan',['“Adik mau mainan itu, temannya juga mau. Kita pakai timer ya, sebentar lagi giliran Adik.”','“Ada dua. Mau yang biru atau yang merah?”'],'Memaksa anak langsung berbagi.','Berbagi itu keterampilan yang tumbuh pelan-pelan. Giliran dengan timer lebih mudah daripada diminta mengalah.'],
+['Tidak mau mandi',['“Mau mandi pakai bebek atau pakai kapal?”','“Airnya Ibu coba dulu ya, hangat sekali.”'],'Memaksa sambil memarahi.','Beri pilihan kecil dan jadikan mandi waktu bermain, misalnya dengan mainan air.'],
+['Tidak mau pakai baju',['“Mau pakai baju merah atau kuning?”','“Kita adu cepat, siapa yang selesai duluan ya.”'],'Berdebat panjang saat sedang buru-buru.','Siapkan dua pilihan baju malam sebelumnya. Anak merasa punya kendali dan Ibu lebih hemat waktu.'],
+['Menangis saat ditinggal',['“Ibu pergi sebentar, nanti Ibu kembali setelah makan siang.”','“Adik boleh sedih. Ibu pasti pulang.”'],'Pergi diam-diam saat anak lengah.','Ucapkan salam perpisahan yang singkat dan sama setiap kali. Menghilang diam-diam justru membuatnya makin cemas.'],
+['Minta digendong terus',['“Ibu peluk sebentar ya, lalu kita jalan bareng.”','“Sampai pohon itu Adik jalan, nanti Ibu gendong lagi.”'],'Menyebut anak manja.','Kebutuhan untuk dekat itu wajar. Beri pelukan penuh dulu, lalu ajak ia mencoba mandiri sedikit demi sedikit.']];
+function vKata(){return `<div class="hd">${bd(2)}<h1>Kalimat siap pakai</h1></div><p class="mt">Ketuk situasinya, lalu coba satu kalimat yang paling nyaman untuk Ibu.</p><div class="card">${SC.map(s=>`<details><summary>${s[0]}</summary><h3>Coba bilang</h3>${s[1].map(x=>`<div class="say">${x}</div>`).join('')}<h3 class="no">Sebaiknya dihindari</h3><p class="sm">${s[2]}</p><h3>Tips</h3><p class="sm">${s[3]}</p></details>`).join('')}</div>`}
+
+/* ---------- Jurnal ---------- */
+const TR=['Layar dimatikan','Minta sesuatu','Lapar atau mengantuk','Berpisah dari ibu','Rebutan mainan','Tidak tahu'],DU=['Kurang dari 5 menit','5–15 menit','Lebih dari 15 menit'],WK=['Pelukan','Dialihkan','Dibiarkan tenang dulu','Menyanyi atau menghitung','Belum ada yang berhasil'];
+const TIPS={'Layar dimatikan':'Pakai timer dan peringatan 5 menit sebelum selesai.','Minta sesuatu':'Sampaikan aturan sebelum keluar rumah dan beri pilihan kecil.','Lapar atau mengantuk':'Coba majukan jam makan atau tidur. Anak lelah lebih mudah meledak.','Berpisah dari ibu':'Buat salam perpisahan yang singkat dan sama setiap kali.','Rebutan mainan':'Siapkan mainan kembar dan giliran dengan timer.','Tidak tahu':'Catat beberapa hari lagi. Polanya biasanya muncul.'};
+let jf={tr:'',du:'',wk:'',nt:''};
+const topOf=(a,k)=>{const c={};a.forEach(x=>{if(x[k])c[x[k]]=(c[x[k]]||0)+1});const e=Object.entries(c).sort((p,q)=>q[1]-p[1])[0];return e?e[0]:''};
+function jc(k,v){jf[k]=jf[k]==v?'':v;draw()}
+function jSave(){if(!jf.tr)return;const a=S.get('jr',[]);a.unshift({t:Date.now(),...jf,nt:(jf.nt||'').trim().slice(0,500)});S.set('jr',a.slice(0,200));jf={tr:'',du:'',wk:'',nt:''};toast('Tersimpan');draw()}
+function jDel(t){S.set('jr',S.get('jr',[]).filter(x=>x.t!=t));draw()}
+function vJurnal(){
+ const a=S.get('jr',[]);
+ const chips=(k,arr)=>`<div class="row">${arr.map(v=>`<button class="chip ${jf[k]==v?'on':''}" onclick="jc('${k}','${v}')">${v}</button>`).join('')}</div>`;
+ const hr=topOf(a.map(x=>({h:new Date(x.t).getHours()+'.00'})),'h'),tt=topOf(a,'tr'),ww=topOf(a.filter(x=>x.wk!='Belum ada yang berhasil'),'wk');
+ return `<div class="hd">${bd(4)}<h1>Jurnal tantrum</h1></div><p class="mt">Catat singkat saja, nanti pola si kecil akan kelihatan.</p>
+ <div class="card"><h2>Catat kejadian</h2><h3>1. Apa pemicunya?</h3>${chips('tr',TR)}<h3>2. Berapa lama?<span class="hint">boleh dilewati</span></h3>${chips('du',DU)}<h3>3. Apa yang membantu?<span class="hint">boleh dilewati</span></h3>${chips('wk',WK)}<h3>4. Catatan Ibu<span class="hint">boleh dikosongkan</span></h3><textarea id="jn" maxlength="500" placeholder="Tulis apa saja, misalnya: tadi habis main di luar, jadi lebih capek." oninput="jf.nt=this.value">${esc(jf.nt||'')}</textarea><div class="row"><button class="btn" style="width:100%" ${jf.tr?'':'disabled'} onclick="jSave()">Simpan catatan</button></div></div>
+ ${a.length>=3?`<div class="card"><h2>Pola dari ${a.length} catatan</h2><ul><li>Pemicu paling sering: <b>${tt}</b></li><li>Jam paling rawan: sekitar <b>${hr}</b></li>${ww?`<li>Yang paling sering membantu: <b>${ww}</b></li>`:''}</ul><p class="sm">${TIPS[tt]||''}</p></div>`:`<div class="card" style="text-align:center">${a.length?'':ILL.book}<p class="sm mt">${a.length?`Baru ${a.length} catatan. Pola akan muncul setelah 3 catatan.`:'Belum ada catatan. Setelah tantrum berikutnya, catat di sini.'}</p></div>`}
+ ${a.slice(0,10).map(x=>`<div class="card sm"><b>${esc(x.tr)}</b> · ${esc(x.du||'-')}<br>Membantu: ${esc(x.wk||'-')}${x.nt?`<div class="say" style="font-weight:400;white-space:pre-wrap">${esc(x.nt)}</div>`:'<br>'}<span class="mt">${new Date(x.t).toLocaleString('id-ID',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</span> <button class="chip" style="float:right" onclick="jDel(${x.t})">Hapus</button></div>`).join('')}
+ <p class="note">Catatan tersimpan otomatis di HP dan browser ini. Pakai HP dan browser yang sama supaya riwayat Ibu tidak hilang. Mau pindah HP? Simpan cadangan di tab Ibu.</p>`}
+
+/* ---------- Ibu ---------- */
+const BQ=['Lelah sampai sulit bangkit, meski sudah istirahat','Mudah tersulut emosi pada anak','Merasa tidak cukup baik sebagai ibu','Ingin menghindar dari orang lain','Tidak punya waktu untuk diri sendiri','Nafsu makan atau pola tidur berubah'];
+let bo=BQ.map(()=>null),bs=0;
+function ba(i,v){bo[i]=v;bs=0;draw()}
+function vIbu(){
+ const done=bo.every(x=>x!==null),sc=bo.reduce((a,b)=>a+(b||0),0);
+ const res=sc<=5?['Ibu masih kuat','Pertahankan waktu istirahat kecil setiap hari. Ibu sudah melakukan banyak hal baik.']:sc<=11?['Ibu mulai kewalahan','Itu wajar sekali. Coba kurangi satu tanggung jawab minggu ini dan minta bantuan pasangan, keluarga, atau teman.']:['Ibu sedang sangat lelah','Ibu tidak perlu menanggungnya sendiri. Ceritakan pada orang terdekat, dan pertimbangkan bertemu psikolog, dokter, atau tenaga puskesmas.'];
+ return `<div class="hd">${bd(5)}<h1>Ibu juga perlu dijaga</h1></div><p class="mt">Cek singkat kondisi Ibu dalam dua minggu terakhir.</p>
+ <div class="card"><h2>Cek kelelahan</h2>${BQ.map((q,i)=>`<h3>${q}</h3><div class="row">${['Tidak pernah','Kadang','Sering','Hampir selalu'].map((l,v)=>`<button class="chip ${bo[i]===v?'on':''}" onclick="ba(${i},${v})">${l}</button>`).join('')}</div>`).join('')}
+ <div class="row"><button class="btn" ${done?'':'disabled'} onclick="bs=1;draw()">Lihat hasil</button></div>
+ ${bs&&done?`<div class="ban" style="margin-top:12px">${res[0]} (skor ${sc} dari 18)</div><p>${res[1]}</p><p class="note">Ini bukan diagnosis. Jika Ibu merasa sangat sedih berkepanjangan atau punya pikiran menyakiti diri atau anak, segera hubungi tenaga kesehatan atau orang terdekat.</p>`:''}</div>
+ <details class="card"><summary>Tujuh kebiasaan kecil</summary><div><ul><li>Minta bantuan sebelum benar-benar lelah.</li><li>Turunkan target, tidak perlu jadi ibu sempurna.</li><li>Sisihkan 10 menit untuk diri sendiri.</li><li>Jaga jadwal tidur dan makan anak agar hari lebih bisa diprediksi.</li><li>Berhenti membandingkan anak dengan anak lain.</li><li>Cari teman sesama ibu untuk saling bergantian menjaga anak.</li><li>Kumpulkan kenangan baik, bukan kesempurnaan.</li></ul></div></details>
+ <div class="card"><h2>Kartu cetak untuk Ibu</h2><p class="sm">Kartu perasaan, jadwal harian, dan tabel bintang. Cetak di kertas A4, lalu gunting.</p><div class="row"><a class="btn" style="text-decoration:none;display:inline-flex;align-items:center" href="kartu-tb-r4k9x2m7.pdf" target="_blank" rel="noopener">Unduh kartu cetak (PDF)</a></div></div>
+ <div class="card"><h2>Cadangan catatan</h2><p class="sm">Mau ganti HP? Simpan cadangan di sini, lalu pulihkan di HP baru setelah masuk dengan email yang sama.</p><div class="row"><button class="btn" onclick="bk()">Simpan cadangan</button><label class="btn g" style="cursor:pointer;display:inline-flex;align-items:center">Pulihkan<input type="file" accept=".json,application/json" hidden onchange="rs(this.files[0])"></label><button class="chip" onclick="bkHelp(0)">Lihat caranya</button></div><p class="note">File cadangan berisi catatan jurnal Ibu. Simpan di tempat yang aman, misalnya Google Drive atau kirim ke WhatsApp sendiri.</p></div>
+ <div class="card"><h2>Kalimat untuk Ibu</h2><ul><li>Ibu tidak harus sempurna. Hadir saja sudah cukup.</li><li>Hari yang berantakan bukan berarti Ibu gagal.</li><li>Meminta bantuan itu tanda sayang pada diri sendiri dan si kecil.</li><li>Si kecil butuh ibu yang cukup tenang, bukan ibu yang tidak pernah lelah.</li><li>Besok ada kesempatan baru untuk mencoba lagi.</li></ul></div>
+ <div class="card"><h2>Bagikan ke ibu lain</h2><p class="sm">Kalau aplikasi ini membantu, kirim ke teman atau grup ibu-ibu.</p><div class="row"><button class="btn" onclick="share()">Bagikan</button></div></div>
+ <p class="note">Aplikasi ini panduan umum, bukan pengganti dokter atau psikolog.</p><div class="row"><button class="chip" onclick="logout()">Keluar dari akun ini</button></div>`}
+function share(){
+ const tx='Aku pakai Tenang Bu: panduan saat anak tantrum, timer layar, dan program 7 hari. Siapa tahu cocok juga untuk Ibu: '+location.href.split('#')[0];
+ try{if(navigator.share){navigator.share({text:tx}).catch(()=>{});return}}catch(e){}
+ try{navigator.clipboard.writeText(tx).then(()=>toast('Teks disalin'),()=>toast('Salin manual dari alamat halaman'));}catch(e){toast('Salin manual dari alamat halaman')}}
+
+/* ---------- Beranda & render ---------- */
+const DAYS=[
+['Kenali pemicunya','Hari ini cukup memperhatikan saja: kapan si kecil paling mudah rewel? Biasanya ada pola, misalnya saat lapar atau mengantuk.','Coba: catat satu kejadian di tab Jurnal.'],
+['Buat harinya lebih mudah ditebak','Anak lebih tenang kalau tahu apa yang akan terjadi. Tentukan jam yang tetap untuk bangun, makan, dan tidur.','Coba: tulis tiga kegiatan tetap, lalu jalankan di jam yang sama hari ini.'],
+['Beri aba-aba sebelum selesai','Perpindahan kegiatan sering jadi pemicu tangisan. Aba-aba membuat anak siap.','Coba: pakai timer di tab Layar dan ingatkan di sisa 5 menit.'],
+['Coba satu kalimat penenang','Saat si kecil kesal, kalimat pendek yang menyebut perasaannya sering lebih ampuh daripada penjelasan panjang.','Coba: pilih satu kalimat dari tab Kata dan pakai hari ini.'],
+['Lima belas menit berdua','Perhatian penuh yang singkat sering lebih berarti daripada waktu panjang yang terbagi.','Coba: simpan HP, lalu mainkan satu ide dari tab Layar bersama si kecil.'],
+['Ibu juga perlu dijaga','Ibu yang lelah lebih mudah tersulut. Merawat diri bukan egois, itu bagian dari merawat si kecil.','Coba: sisihkan 10 menit untuk diri sendiri, lalu isi cek kondisi di tab Ibu.'],
+['Rayakan kemajuan','Lihat ke belakang: pasti ada hal kecil yang sudah lebih baik.','Coba: baca jurnal Ibu, tulis satu hal yang membaik, dan puji diri Ibu serta si kecil.']];
+function pd(i){let p=S.get('prog',[]);p=p.includes(i)?p.filter(x=>x!=i):[...p,i];S.set('prog',p);draw()}
+function vProg(){const p=S.get('prog',[]);
+ return `<div class="hd">${bd(3)}<h1>Program 7 hari</h1></div><p class="mt">Satu langkah kecil per hari, sekitar 5 menit. Tidak perlu sempurna, yang penting Ibu mulai.</p>
+ <div class="card" style="display:flex;gap:16px;align-items:center"><div style="flex:none;width:96px">${sprout(p.length)}</div><div style="flex:1"><b>${p.length} dari 7 hari selesai</b><div style="height:8px;background:var(--ln);border-radius:9px;margin-top:8px"><div style="height:8px;width:${p.length/7*100}%;background:var(--pr);border-radius:9px"></div></div></div></div>
+ ${p.length==7?'<div class="ban">Selamat, Ibu! Tujuh hari sudah dilalui. Itu bukti Ibu peduli.</div>':''}
+ ${DAYS.map((d,i)=>`<div class="card"><p class="mt sm">Hari ${i+1}</p><h2>${d[0]}</h2><p>${d[1]}</p><div class="say">${d[2]}</div><div class="row"><button class="chip ${p.includes(i)?'on':''}" onclick="pd(${i})">${p.includes(i)?'✓ Selesai':'Tandai selesai'}</button></div></div>`).join('')}
+ <p class="note">Terlewat satu hari? Tidak apa-apa. Lanjutkan saja besok.</p>`}
+function vHome(){return `<h1>Halo, Ibu.</h1><p class="mt">Hari yang berat itu wajar. Ibu tidak sendirian, dan Ibu sudah berusaha dengan baik.</p>
+ ${ILL.home}<button class="hero" onclick="openGuide()"><b>Si kecil sedang tantrum?</b><span>Ikuti langkahnya pelan-pelan, Ibu.</span></button>
+ <div class="card"><h2>Pengingat kecil</h2><ul><li>Tantrum itu bagian dari belajar mengelola perasaan, bukan tanda Ibu gagal.</li><li>Tenangkan diri Ibu dulu, baru si kecil.</li><li>Pelan-pelan tapi konsisten lebih baik daripada sempurna.</li></ul></div>
+ <div class="card"><h2>Mau mulai dari mana?</h2><div class="row"><button class="chip" onclick="go(3)">Program 7 hari</button><button class="chip" onclick="go(1)">Atur waktu layar</button><button class="chip" onclick="go(2)">Kalimat siap pakai</button><button class="chip" onclick="go(4)">Catat dan lihat pola</button><button class="chip" onclick="go(5)">Peluk diri sendiri</button></div></div>
+ <p class="note">Tantrum yang sangat sering, melukai diri atau orang lain, atau berlangsung lama? Konsultasikan ke dokter anak atau psikolog anak.</p>`}
+function draw(){
+ $('#app').innerHTML=[vHome,vLayar,vKata,vProg,vJurnal,vIbu][tab]();
+ $('#nav').innerHTML=TABS.map((t,i)=>`<button class="${i==tab?'on':''}" onclick="go(${i})"><i>${t[0]}</i>${t[1]}</button>`).join('');
+ if(tab==1){tTick();iqf(iq)}}
+draw();
+
+/* ---------- Login akses (Supabase) ---------- */
+const CFG={URL:'https://ifvahbikhfpsklvbswtw.supabase.co',KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmdmFoYmlraGZwc2tsdmJzd3R3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI4MDgzNDEsImV4cCI6MjEwODM4NDM0MX0.KMn1KxFalzzMmMyvQMupI6mAhrzGEg8joGSDsvS4DlE',LYNK:'https://lynk.id/aolsgig/wzr26dgmx4kw'};
+$('#glk').href=CFG.LYNK;
+const gm=m=>{$('#gmsg').textContent=m||''};
+async function chk(e,p){
+ const r=await fetch(CFG.URL+'/rest/v1/rpc/check_access',{method:'POST',headers:{'Content-Type':'application/json',apikey:CFG.KEY,Authorization:'Bearer '+CFG.KEY},body:JSON.stringify({p_email:e,p_phone:p})});
+ if(!r.ok)throw new Error('net');return (await r.json())===true}
+function unlock(){document.body.classList.remove('locked');$('#gate').style.display='none';draw()}
+function lock(m){document.body.classList.add('locked');$('#gate').style.display='block';gm(m)}
+async function doLogin(){
+ const e=$('#ge').value.trim(),p=$('#gp').value.trim();
+ if(CFG.URL.includes('GANTI')){gm('Konfigurasi Supabase belum diisi.');return}
+ if(!/^\S+@\S+\.\S+$/.test(e)){gm('Email belum benar.');return}
+ if(p.replace(/\D/g,'').length<9){gm('Nomor HP belum lengkap.');return}
+ const b=$('#gb');b.disabled=true;gm('Memeriksa…');
+ try{if(await chk(e,p)){S.set('acc',{e,p,t:Date.now()});unlock()}
+ else gm('Email dan nomor HP tidak cocok dengan data order. Gunakan yang sama persis seperti saat order di Lynk.id. Kalau masih gagal, hubungi admin lewat WhatsApp di bawah.')}
+ catch(x){gm('Koneksi bermasalah. Coba lagi.')}
+ b.disabled=false}
+function logout(){S.set('acc',null);lock('')}
+(async()=>{
+ const a=S.get('acc',null);if(!a){lock();return}
+ try{if(await chk(a.e,a.p)){S.set('acc',{...a,t:Date.now()});unlock()}
+ else{S.set('acc',null);lock('Akses tidak ditemukan. Silakan masuk ulang.')}}
+ catch(x){if(Date.now()-a.t<6048e5)unlock();else lock('Tidak ada koneksi. Sambungkan internet untuk masuk.')}
+})();
+</script></body></html>
